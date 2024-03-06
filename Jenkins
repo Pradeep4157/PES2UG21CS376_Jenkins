@@ -3,14 +3,22 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'g++ -o task5 main/hello.cpp'
-        echo 'Build Successful!'
+        script {
+          // Corrected the g++ command
+          sh 'g++ -o task5 main/hello.cpp'
+          echo 'Build Successful!'
+        }
       }
     }
     stage('Test') {
       steps {
-        sh './task5'
-        echo 'Test Successful!'
+        script {
+          // Ensure the working directory is set to the correct path
+          dir('main') {
+            sh './task5'
+          }
+          echo 'Test Successful!'
+        }
       }
     }
     stage('Deploy') {
